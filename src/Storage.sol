@@ -17,5 +17,4 @@ contract Storage {
         SharedStructs.UserData memory newUser = SharedStructs.UserData({favNum: _favNum, nickname:username});
         addresToUser[userAdx] = newUser;
     }
-
 }
