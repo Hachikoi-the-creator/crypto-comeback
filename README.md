@@ -92,6 +92,48 @@ contract LibraryExample {
 }
 ```
 
+# Custom Errors
+```c#
+ // custom error
+    error InsufficientBalance(uint balance, uint withdrawAmount);
+
+    function testCustomError(uint _withdrawAmount) public view {
+        uint bal = address(this).balance;
+        if (bal < _withdrawAmount) {
+            revert InsufficientBalance({balance: bal, withdrawAmount: _withdrawAmount});
+        }
+    }
+```
+
+# Testing
+## Zero adx
+```c#
+  modifier validAddress(address _addr) {
+        require(_addr != address(0), "Not valid address");
+        _;
+    }
+```
+## Re-entrancy attack prevention
+```c#
+// This modifier prevents a function from being called while
+// it is still executing.
+ modifier noReentrancy() {
+        require(!locked, "No reentrancy");
+
+        locked = true;
+        _;
+        locked = false;
+    }
+
+    function decrement(uint i) public noReentrancy {
+        x -= i;
+
+        if (i > 1) {
+            decrement(i - 1);
+        }
+    }
+```
+
 Foundry consists of:
 
 -   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
