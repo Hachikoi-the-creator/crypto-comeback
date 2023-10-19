@@ -32,7 +32,7 @@ contract FoundMe {
         require(sent, "Something went wrong trying to Withdraw the stored eth");
     }
 
-    function getEthUsdPrice() public view returns (int256) {
+    function getEthUsdPrice() public view returns (uint256) {
         // prettier-ignore
         (
             /* uint80 roundID */,
@@ -41,7 +41,7 @@ contract FoundMe {
             /*uint timeStamp*/,
             /*uint80 answeredInRound*/
         ) = dataFeed.latestRoundData();
-        return answer;
+        return uint(answer * 1e10);
     }
 
     function getConversionRate(
